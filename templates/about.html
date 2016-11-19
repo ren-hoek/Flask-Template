@@ -4,14 +4,62 @@
 {% endblock %}
 
 {% block content %}
+<body>
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-sm-1"></div>
 		<div class="col-sm-10">
                 <h2>Aim</h2>
                 <p>Making it easier to learn Flask</p>
+		<div id="chart-line-hitsperday"></div>
             </div>
 		<div class="col-sm-1"></div>
 	</div>
+	<script>
+	  $.ajax(
+	  {url: "/data",
+	  success: function(data) {
+	  
+	  console.log(JSON.parse(data));
+	  json_data = JSON.parse(data);
+	  var ndx = crossfilter(json_data);
+	  var parseDate = d3.time.format("%Y-%m-%d").parse;
+	  var parseDateMth = d3.time.format("%Y-%m").parse;
+	  
+	  json_data.forEach(function(d) {
+	  d.date = parseDate(d.date);
+	  d.Year = d.date.getFullYear();
+	  d.YearMth = parseDateMth(d.Year+'-'+d.date.getMonth()+1);
+	  });
+
+	  var dateDim = ndx.dimension(function(d) {return d.date;});
+	  var quant = dateDim.group().reduceSum(function(d) {return d.value;});
+
+	  var yearDim = ndx.dimension(function(d) {return +d.Year});
+	  var year_total = yearDim.group().reduceSum(function(d) {return d.value;});
+
+	  var minDate = dateDim.bottom(1)[0].date;
+	  var maxDate = dateDim.top(1)[0].date;
+
+	  var minYear = yearDim.bottom(1)[0].Year;
+	  var maxYear = yearDim.top(1)[0].Year;
+	  console.log(maxYear);
+	  var hitslineChart = dc.lineChart("#chart-line-hitsperday");
+
+	  hitslineChart
+	  .width(1100).height(240)
+	  .dimension(dateDim)
+	  .group(quant,"quant")
+	  .elasticX(true)
+	  .renderArea(false)
+	  .x(d3.time.scale().domain([minDate,maxDate]))
+	  .brushOn(true)
+//	  .legend(dc.legend().x(50).y(10).itemHeight(13).gap(5))
+	  .yAxisLabel("Amount per month");
+
+	  dc.renderAll();
+	  
+	  }})
+	</script>
 </div>
 {% endblock %}

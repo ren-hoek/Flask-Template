@@ -14,5 +14,11 @@ def home():
 def about():
     return render_template('about.html')
 
+@app.route('/data')
+def data():
+    with open('data.json', 'r') as json_file:
+        data=json_file.read().replace('\n','').replace(' ','')
+    return data
+
 if __name__ == '__main__':
     app.run(debug=True)
