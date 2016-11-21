@@ -9,24 +9,110 @@
 	<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.12.4.min.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename='js/d3.min.js') }}"></script>
-	
-<!--	<script type="text/javascript" src="https://d3js.org/d3.v3.min.js"></script> -->
 	<script type="text/javascript" src="{{ url_for('static', filename='js/crossfilter.min.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename='js/dc.min.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename='js/keen.min.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename='js/holder.min.js') }}"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<style type='text/css'>
-	  .navbar-inverse {
-	  background-color: #800000;
-	  border-color: #800000;
-	  }
 
-	  .navbar-inverse .navbar-brand {color: #FFFFFF;}
-	  .navbar-inverse .navbar-brand:hover {color: #9d9d9d;}
+/*
+ * Full-page application style
+ */
 
-	  .navbar-inverse .navbar-nav > li > a {color: #FFFFFF;}
-	  .navbar-inverse .navbar-nav > li > a:hover {color: #9d9d9d;}
+body.application,
+.keen-dashboard {
+  background: #f2f2f2;
+  font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  padding: 60px 20px 0;
+}
+
+body.application > .container-fluid,
+.keen-dashboard > .container-fluid {
+  margin: 0 0 32px;
+  margin: 0 0 2rem;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+body.application div[class^="col-"],
+.keen-dashboard div[class^="col-"] {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+body.application div[class^="col-"] div[class^="col-"],
+.keen-dashboard div[class^="col-"] div[class^="col-"] {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+body.application hr,
+.keen-dashboard hr {
+  border-color: #d7d7d7;
+  margin: 10px 0;
+}
+
+body.application .navbar-inverse,
+.keen-dashboard .navbar-inverse {
+  background-color: #3d4a57;
+  border-color: #333;
+}
+
+body.application .navbar-inverse .navbar-nav > li > a,
+body.application .navbar .navbar-brand,
+.keen-dashboard .navbar-inverse .navbar-nav > li > a,
+.keen-dashboard .navbar .navbar-brand {
+  color: #fbfbfb;
+  text-decoration: none;
+}
+
+body.application .main-nav > li > a:hover,
+.keen-dashboard .main-nav > li > a:hover {
+  border-bottom: 2px solid transparent;
+  -webkit-transition: border 300ms ease;
+  -o-transition: border 300ms ease;
+  transition: border 300ms ease;
+  border-bottom-color: white;
+}
+
+body.application .return-link,
+body.application .return-link:focus,
+body.application .return-link:hover,
+.keen-dashboard .return-link,
+.keen-dashboard .return-link:focus,
+.keen-dashboard .return-link:hover {
+  text-decoration: none;
+}
+
+
+.chart-wrapper {
+  background: #fff;
+  border: 1px solid #e2e2e2;
+  border-radius: 3px;
+  margin-bottom: 10px;
+}
+.chart-wrapper .chart-title {
+  border-bottom: 1px solid #d7d7d7;
+  color: #666;
+  font-size: 14px;
+  font-weight: 200;
+  padding: 7px 10px 4px;
+}
+
+.chart-wrapper .chart-stage {
+  overflow: hidden;
+  padding: 5px 10px;
+  position: relative;
+}
+
+.chart-wrapper .chart-notes {
+  background: #fbfbfb;
+  border-top: 1px solid #e2e2e2;
+  color: #808080;
+  font-size: 12px;
+  padding: 8px 10px 5px;
+} 	  
 
 	</style>
 	</head>
@@ -42,6 +128,7 @@
 			<ul class="nav navbar-nav">
 			  <li><a href="{{ url_for('home') }}">Home</a></li>
 			  <li><a href="{{ url_for('about') }}">About</a></li>
+			  <li><a href="{{ url_for('ixbrl') }}">iXBRL</a></li>
 			</ul>
 		      </div>
 		    </div>
